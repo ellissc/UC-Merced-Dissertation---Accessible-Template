@@ -1,0 +1,358 @@
+\DocumentMetadata{
+  lang = en,
+  pdfversion = 2.0,
+  pdfstandard = ua-2,
+  tagging = on,
+  testphase = {phase-III,math,table},
+  tagging-setup = {math/setup=mathml-SE},
+  uncompress
+}
+
+%% N.B. REQUIRES LUALATEX; you might need to compile and recompile multiple times for the table of contents to populate
+
+\documentclass[12pt, oneside]{report}
+
+% Page size and margins:
+\usepackage[
+    paper=letterpaper,
+    top=1in,
+    bottom=1.25in,
+    left=1.5in,
+    right=1in,
+    footskip=0.75in, % Distance to bottom page number (1.25 - 0.75 = 0.5in from edge)
+    includehead,
+    headsep=0.3in    % Distance to top page number (~0.5in from top edge)
+]{geometry}
+
+% Font and color:
+%\usepackage{times} % Times New Roman % Double-check
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage[plainpages=false,
+		     pdfborder={0 0 0}]{hyperref}
+\hypersetup{colorlinks=false, 
+            linktoc=all,
+            allcolors=black, 
+            pdftitle={"YOUR TITLE HERE"}, 
+            pdfauthor={"YOUR NAME HERE"}, 
+            pdfsubject={"PhD Dissertation"}} 
+\usepackage[hyphenbreaks]{breakurl}
+            
+
+% Citations:
+\usepackage[english]{babel}
+\usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
+\addbibresource{references.bib} % CHANGE TO YOUR BIB
+
+% Spacing:
+\usepackage{setspace}
+\singlespacing
+
+% Prevent Widows and Orphans (lines separated from paragraphs)
+\widowpenalty=10000
+\clubpenalty=10000
+
+% Custom Page Numbering Logic:
+\usepackage{fancyhdr}
+\usepackage{tagpdf}
+
+% Define the "Main Body" style (Top-Right numbering)
+\fancypagestyle{mainbody}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    % Tag the page number as an artifact
+    \fancyhead[R]{\tagpdfparaOff\thepage\tagpdfparaOn}
+}
+
+% Define the "First Page of Chapter" style (Bottom-Center numbering)
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    % Tag the page number as an artifact
+    \fancyfoot[C]{\tagpdfparaOff\thepage\tagpdfparaOn}
+}
+
+% A few common packages
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{relsize}
+\usepackage[titletoc]{appendix}
+\usepackage{float}
+
+
+% Some other useful packages
+\usepackage{caption}
+\usepackage{subcaption}  
+\renewcommand{\thesubfigure}{\Alph{subfigure}}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[autostyle, english = american]{csquotes}
+
+\setlength{\headheight}{14.5pt}
+\addtolength{\topmargin}{-2.5pt}
+
+\begin{document}
+
+% --- Title Page ---
+\begin{titlepage}
+    \centering
+    \begin{singlespacing}
+        % 1. Institution Name
+        {UNIVERSITY OF CALIFORNIA, MERCED \par}
+        
+        \vspace{1.5in}
+        
+        % 2. Title (Specific, unambiguous, no symbols/Greek letters)
+        {\bfseries \Large YOUR TITLE HERE \par}
+        
+        \vspace{1in}
+        
+        % 3. Dissertation/Thesis statement
+        {A dissertation submitted in partial satisfaction of the requirements \\ 
+        for the degree of Doctor of Philosophy \par}
+        
+        \vspace{0.3in}
+        
+        % 4. Major Field
+        {in \par}
+        \vspace{0.3in}
+        {Cognitive and Information Sciences \par}
+        
+        \vspace{0.5in}
+        
+        % 5. Lowercase "by"
+        {by \par}
+        
+        \vspace{0.5in}
+        
+        % 6. Name (as on file with Registrar)
+        {YOUR NAME HERE \par}
+        
+        \vfill % Pushes the committee section toward the bottom
+        
+        % 7. Committee Section (Left-aligned, not centered)
+        \begin{flushright}
+            Dissertation Committee: \\
+            \hspace{1cm} Professor YOUR ADVISOR HERE, Chair \\
+            \hspace{1cm} Professor COMMITTEE MEMBER \\
+            \hspace{1cm} Professor COMMITTEE MEMBER 2
+        \end{flushright}
+        
+        \vspace{0.5in}
+        
+        % 8. Degree Year
+        {2026 \par}
+    \end{singlespacing}
+\end{titlepage}
+
+% Ensure the next page starts the numbering correctly
+\clearpage
+
+% --- Copyright Page ---
+\newpage
+\thispagestyle{empty} % No page number, though it is counted as page "ii"
+\vspace*{\fill} % Pushes content to the bottom
+
+\begin{center}
+    \singlespacing
+    Copyright © 2026 by YOUR NAME HERE\\
+    All rights reserved
+\end{center}
+\vspace{0.5in} % Adds a small buffer from the very edge of the paper
+\clearpage
+
+% --- Signature Page ---
+\newpage
+\pagenumbering{roman}
+\thispagestyle{plain} % This ensures the page number "iii" appears at the bottom center
+\setcounter{page}{3}  % Explicitly set to page iii
+
+\begin{singlespacing}
+\vspace*{\fill} % Start vertical centering
+
+\noindent The dissertation of YOUR NAME HERE is approved and is acceptable in quality and form for publication on microfilm and in digital formats:
+
+\vspace{0.6in} % Space for signature
+\tagstructbegin{tag=Artifact}
+  \noindent\rule{3in}{0.4pt} \\
+\tagstructend 
+Professor COMMITTEE MEMBER
+
+\vspace{0.6in} % Space for signature
+\tagstructbegin{tag=Artifact}
+  \noindent\rule{3in}{0.4pt} \\
+\tagstructend 
+Professor COMMITTEE MEMBER 2
+
+\vspace{0.6in} % Space for signature
+\tagstructbegin{tag=Artifact}
+  \noindent\rule{3in}{0.4pt} \\
+\tagstructend 
+Professor YOUR ADVISOR HERE, Chair % Chair must be on the bottom line
+
+\vspace{0.8in}
+
+\begin{center}
+    University of California, Merced \\
+    2026
+\end{center}
+
+\vspace*{\fill} % End vertical centering
+\end{singlespacing}
+\clearpage
+
+% --- Acknowledgements ---
+\newpage
+\pagestyle{plain} % Center page number at the bottom
+\addcontentsline{toc}{chapter}{Acknowledgements} % Add to Table of Contents
+
+\begin{center}
+    {\bfseries \Large ACKNOWLEDGEMENTS}
+\end{center}
+
+\vspace{0.4in}
+
+\begin{singlespacing}
+\setlength{\parindent}{0.5in} % Maintain consistent 0.5" paragraph indentation
+
+ACKNOWLEDGEMENT TEXT HERE. Thank you XYZ.
+
+% --- MANDATORY FUNDING ACKNOWLEDGEMENT ---
+% This research was supported in part by the National Science Foundation under Grant No. [Your Grant Number] and a UC Merced Graduate Division Fellowship. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author and do not necessarily reflect the views of the funding agencies.
+
+% --- COPYRIGHT PERMISSION STATEMENT (If applicable) ---
+Part of Chapter 2 is reprinted with permission from JOURNAL, YEAR. 
+%I gratefully acknowledge the permission granted by [Publisher Name] to include this copyrighted material in my dissertation.
+
+\end{singlespacing}
+\clearpage
+
+% --- TABLE OF CONTENTS ---
+\clearpage
+\begin{singlespacing} % Requirement: TOC must be single-spaced
+    \renewcommand{\contentsname}{Table of Contents}
+    \tableofcontents
+\end{singlespacing}
+\clearpage
+
+% --- List of Figures/Tables (Optional) ---
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\clearpage
+
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\clearpage
+
+% --- Curriculum Vita ---
+\newpage
+\pagestyle{plain} % Page number at bottom center
+\addcontentsline{toc}{chapter}{Curriculum Vita} % Required for the Table of Contents
+
+\begin{center}
+    {\bfseries \Large CURRICULUM VITA}
+\end{center}
+
+\vspace{0.4in}
+
+\begin{singlespacing}
+
+% --- Education Section ---
+\section*{Education}
+\noindent
+\textbf{University of California, Merced} \hfill YEAR \\
+Doctor of Philosophy in Cognitive and Information Sciences
+
+\vspace{0.1in}
+\noindent
+\textbf{University of California, Merced} \hfill YEAR \\
+Master of Science in Cognitive and Information Sciences
+
+\vspace{0.1in}
+\noindent
+\textbf{Undergrad University} \hfill YEAR \\
+Bachelor of Science in Cognitive Science
+
+% --- Fields of Study ---
+\section*{Fields of Study}
+\noindent
+\textbf{Primary Field:} Cognitive and Information Sciences \\
+\textbf{Specializations:} Psychology, Linguistics, Neuroscience, Cultural Evolution
+
+\vspace{0.2in}
+\noindent
+\textbf{Supervising Faculty:} \\
+Professor YOUR ADVISOR HERE, Chair \\
+Professor COMMITTEE MEMBER\\
+Professor COMMITTEE MEMBER 2
+
+\end{singlespacing}
+\clearpage
+
+% --- Abstract ---
+\newpage
+\newgeometry{top=2.5in, bottom=1.25in, left=1.5in, right=1in} % Special top margin for Abstract
+\thispagestyle{plain} % Page number at bottom center
+\addcontentsline{toc}{chapter}{Abstract} % Add Abstract to Table of Contents
+
+\begin{singlespacing}
+    \begin{center}
+        % 1. Header Metadata (Must match title page)
+        {\bfseries ABSTRACT OF THE DISSERTATION \par}
+        \vspace{0.2in}
+        {YOUR TITLE HERE \par}
+        \vspace{0.2in}
+        {by \par}
+        \vspace{0.2in}
+        {YOUR NAME HERE \par}
+        \vspace{0.2in}
+        {Doctor of Philosophy \par}
+        {University of California, Merced, 2026 \par}
+        {Professor YOUR ADVISOR HERE, Chair \par}
+    \end{center}
+
+    \vspace{0.4in}
+
+    % 2. Abstract Text
+    % Paragraphs must be indented 0.5". LaTeX default is usually smaller, so we set it here.
+    \setlength{\parindent}{0.5in}
+    
+    ABSTRACT TEXT HERE. 
+
+\end{singlespacing}
+
+\restoregeometry % Returns margins to the standard 1" top margin for the next section
+\clearpage
+
+
+% --- Main Body ---
+\pagenumbering{arabic}
+\pagestyle{mainbody} % Sets subsequent pages to top-right
+
+\include{ch-introduction}
+\include{ch-study1}
+% \include{ch-study2}
+% \include{ch-study3}
+% \include{ch-study4}
+% \include{conclusion}
+
+% --- Appendices ---
+\newpage
+\begin{appendices}
+    % Adjust numbering/formatting for appendices if needed
+    \singlespacing % Requirement: Appendices must be single-spaced
+    \include{appendix} 
+\end{appendices}
+
+% --- Bibliography ---
+\newpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\printbibliography
+
+\end{document}
