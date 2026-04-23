@@ -32,7 +32,7 @@
 \usepackage[plainpages=false,
 		     pdfborder={0 0 0}]{hyperref}
 \hypersetup{colorlinks=false, 
-            linktoc=all,
+            linktoc=none, % UPSTREAM ISSUE: Table of contents tagging causes compliance issues
             allcolors=black, 
             pdftitle={"YOUR TITLE HERE"}, 
             pdfauthor={"YOUR NAME HERE"}, 
@@ -44,6 +44,8 @@
 \usepackage[english]{babel}
 \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
 \addbibresource{references.bib} % CHANGE TO YOUR BIB
+\ExecuteBibliographyOptions{hyperref=false}
+
 
 % Spacing:
 \usepackage{setspace}
